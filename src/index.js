@@ -4,12 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import CitiesProvider from './hooks/useCities';
-
+import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
   <React.StrictMode>
-    <CitiesProvider>
-      <App />
-    </CitiesProvider>
+    <BrowserRouter>
+      <CitiesProvider>
+        <App />
+      </CitiesProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

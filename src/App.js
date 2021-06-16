@@ -1,25 +1,29 @@
 import './App.css';
 import React, { useEffect } from 'react'
-import SearchForm from './components/SearchForm/SearchForm';
-import { useCities } from './hooks/useCities';
-import CreateCityCard from './components/CityCard/CityCard';
+import { Switch, Route } from "react-router-dom";
+import Header from './components/Header/Header';
+import CityPage from './pages/CityPage/CityPage';
+import HomePage from './pages/HomePage/HomePage';
 
 
 function App() {
-  const [cities] = useCities()
-
-  useEffect(() => {
-    console.log(cities);
-  }, [cities])
-
   return (
     <>
-    <SearchForm></SearchForm>
-    <CreateCityCard></CreateCityCard>
-    {/* {cities.map( city => <div key={city.id}>
-              <h2>{city.name},{city.country}</h2>
-              <h3>{city.data?.main.temp} C</h3>
-              </div>)} */}
+      <Header></Header>
+      <div className="container">
+        <Switch>
+          <Route exact path="/">
+            <HomePage></HomePage>
+          </Route>
+          <Route path="/city/:query">
+            <CityPage></CityPage>
+          </Route>
+        </Switch>
+        
+
+
+
+      </div>
     </>
   );
 }

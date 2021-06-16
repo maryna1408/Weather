@@ -1,28 +1,15 @@
 import React, { useState } from "react";
 import { getWeatherByCityName } from "../../api/getWeather";
-
+import { useHistory } from "react-router-dom";
 export default function SearchForm() {
+  const history = useHistory() 
   const [query, setQuery] = useState("");
   async function search(event) {
     event.preventDefault();
     console.log(query);
-    try {
-        const data = await getWeatherByCityName(query.trim());
-        setQuery('')
-        const newCity = {
-            id: data.id,
-            name: data.name,
-            country: data.sys.country
-        }
-        const savedCities = JSON.parse(window.localStorage.cities)
-        if (!savedCities.find(city => city.id === newCity.id)) {
-            savedCities.push(newCity)
-        }
-        window.localStorage.cities = JSON.stringify(savedCities)
-        console.log(data);
-    } catch (error) {
-        console.warn(error);
-    }
+    history.push(`/city/${query.trim()}`)
+    setQuery('')
+    
   }
   return (
     <>
