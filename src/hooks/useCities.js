@@ -32,6 +32,14 @@ const CitiesProvider = ({ children }) => {
                 cities.splice(cityIdx, 1, modifiedCity)
                 return cities
             }
+            case 'ADD_CITY': {
+                return [action.payload, ...state]
+            }
+            case 'REMOVE_CITY': {
+                const cities = [...state]
+                cities.splice(action.payload, 1)
+                return cities
+            }
             default:
                 throw new Error('Incorrect action type!')
         }

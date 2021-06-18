@@ -18,6 +18,9 @@ function App() {
           <Route path="/city/:query">
             <CityPage></CityPage>
           </Route>
+          <Route path="/404">
+            <h1>404 not found</h1>
+          </Route>
         </Switch>
         
 

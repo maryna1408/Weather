@@ -49,6 +49,9 @@ table {
 *{
   box-sizing: border-box;
 }
+i{
+	display: inline-flex;
+}
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

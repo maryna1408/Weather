@@ -57,13 +57,21 @@ const timeFormatter = new Intl.DateTimeFormat(undefined, {
 })
 
 export default function CityCard({city}) {
+  function getCorrectTime(time, cityTimezoneOffset) {
+    const msTime = time * 1000
+    const msCityTimezoneOffset = cityTimezoneOffset * 1000
+    const msOurTimezoneOffset = new Date().getTimezoneOffset() * 60 * 1000 // -1
+    return msTime + msOurTimezoneOffset + msCityTimezoneOffset
+  }
   return (
     <>{city && <div className={[styles.card].join(' ')}>
       <div className={[styles.main_content]}>
     <h2>
       {city.name}, {city.country}
     </h2>
+    {city.data && <img src={`//openweathermap.org/img/w/${city.data?.weather[0].icon}.png`} alt="" />}
     <h3 className={[styles.temp]}>{Math.round(city.data?.main.temp)}°</h3>
+    <h3>{city.data?.weather[0].main}</h3>
     <div className={[styles.max_min_temp]}>
     <div>max. {Math.round(city.data?.main.temp_max)}°</div>, 
     <div>min. {Math.round(city.data?.main.temp_min)}°</div>
@@ -74,10 +82,10 @@ export default function CityCard({city}) {
       <div className={[styles.secondary_content_elem]}>Pressure <h4>{city.data?.main.pressure}</h4> </div>
       <div className={[styles.secondary_content_elem]}>Feels like <h4>{Math.round(city.data?.main.feels_like)}°</h4></div>
       <div className={[styles.secondary_content_elem]}>Visibility <h4>{city.data?.visibility} m</h4></div>
-      <div className={[styles.secondary_content_elem]}>Wind direction <h4>{city.data?.wind.deg}°</h4></div>
+      <div className={[styles.secondary_content_elem]}>Wind direction <h4>{city.data?.wind.deg}° <i style={{transform: `rotate(${city.data?.wind.deg}deg)`}}>&#129045;</i></h4></div>
       <div className={[styles.secondary_content_elem]}>Wind speed <h4>{city.data?.wind.speed}m/s</h4></div>
-      <div className={[styles.secondary_content_elem]}>Sunrise <h4>{timeFormatter.format(city.data?.sys.sunrise)}</h4></div>
-      <div className={[styles.secondary_content_elem]}>Sunset <h4>{timeFormatter.format(city.data?.sys.sunset)}</h4></div>
+      <div className={[styles.secondary_content_elem]}>Sunrise <h4>{city.data?.sys.sunrise && timeFormatter.format(getCorrectTime(city.data?.sys.sunrise, city.data?.timezone))}</h4></div>
+      <div className={[styles.secondary_content_elem]}>Sunset <h4>{city.data?.sys.sunset && timeFormatter.format(getCorrectTime(city.data?.sys.sunset, city.data?.timezone))}</h4></div>
     </div>
   </div>}</>
   );
